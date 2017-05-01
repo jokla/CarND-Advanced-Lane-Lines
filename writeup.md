@@ -77,7 +77,9 @@ Now let's analyze the B and L channels of the [LAB color space](https://en.wikip
 
 we apply the thresholds on both channels and we get:
 
-<img src="./doc/color/labbt.png" width="300" alt="" /><img src="./doc/color/lablt.png" width="300" alt="" />   
+<img src="./doc/color/labbt.png" width="300" alt="" /><img src="./doc/color/lablt.png" width="300" alt="" /> 
+
+we combine them:   
 
 <img src="./doc/color/labcomb.png" width="600" alt="" />  
 
@@ -85,7 +87,7 @@ This is the result of the gradient mask:
 
 <img src="./doc/color/gradientmask.png" width="600" alt="" /> 
 
-To obtained the gradient mask I used the following code:
+obtained with the following code:
 ``` python
 
   # Convert image to HSL color and extract S channel
@@ -109,7 +111,7 @@ Finally we combine the color mask with the gradient mask:
 
 <img src="./doc/color/final.png" width="600" alt="" /> 
 
-
+I notice that the color mask is working better for the detection of the lines on the bottom part of the image while the gradient mask is working better for the line far away. That's why I decided to use both masks.
   
 
 #### 3. Describe how  you performed a perspective transform and provide an example of a transformed image.
@@ -139,7 +141,7 @@ The perspective transformation allow us to create a "birds-eye view" that will b
 
 #### 4. Describe how you identified lane-line pixels and fit their positions with a polynomial.
 
-After correcting distortion, applying thresholding, and a perspective transform to a road image, we have a binary image where the lane lines stand out clearly. However, we still need to decide explicitly which pixels are part of the lines and which belong to the left line and which belong to the right line.
+After correcting the distortion, applying thresholding, and applying a perspective transform to a road image, we have a binary image where the lane lines stand out clearly. However, we still need to decide explicitly which pixels are part of the lines and which belong to the left line and which belong to the right line.
 
 <img src="./doc/pimage/0_1.png" width="600" alt="" /> 
 
