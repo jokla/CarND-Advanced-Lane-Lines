@@ -36,17 +36,17 @@ The code for this step is contained in the second code cell of the [IPython note
 
 I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time I successfully detect all chessboard corners in a test image.  `imgpoints` will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection.  
 
-I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
+I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result:    
 
-<img src="./doc/undistort_chess.png" width="500" alt="" /> 
+<img src="./doc/undistort_chess.png" width="650" alt="" />    
 
 ## Pipeline (single images)
 
 ### 1. An example of a distortion-corrected image.
 
-Using the function `cv2.undistort()` and the distortion parameters calculated previously via camera calibration I apply the distortion correction on the following image: 
+Using the function `cv2.undistort()` and the distortion parameters calculated previously via camera calibration I apply the distortion correction on the following image:    
 
-<img src="./doc/undistort_road.png" width="500" alt="" /> 
+<img src="./doc/undistort_road.png" width="650" alt="" /> 
 
 ### 2. Describe how you used color transforms, gradients or other methods to create a thresholded binary image.  
 
@@ -60,27 +60,27 @@ The aim of the color mask is to reveal the white and yellow lanes in the image. 
 I tried out various combinations of color and gradient thresholds to generate a binary image where the lane lines are clearly visible.
 
 Let's consider the following image:   
-<img src="./doc/color/orig.png" width="500" alt="" />    
+<img src="./doc/color/orig.png" width="650" alt="" />    
 
 Now we convert the image to the [LUV color space](https://en.wikipedia.org/wiki/CIELUV):   
-<img src="./doc/color/luvl.png" width="500" alt="" />    
+<img src="./doc/color/luvl.png" width="650" alt="" />    
 
 and we apply the threshold to get the white pixels:    
 
-<img src="./doc/color/luv_threshold.png" width="500" alt="" />   
+<img src="./doc/color/luv_threshold.png" width="650" alt="" />   
 
 Now let's analyze the B and L channels of the [LAB color space](https://en.wikipedia.org/wiki/Lab_color_space):
-<img src="./doc/color/labb.png" width="250" alt="" /><img src="./doc/color/labl.png" width="250" alt="" /> 
+<img src="./doc/color/labb.png" width="300" alt="" /><img src="./doc/color/labl.png" width="300" alt="" />   
 
 we apply the thresholds on both channels and we get:
 
-<img src="./doc/color/labbt.png" width="250" alt="" /><img src="./doc/color/lablt.png" width="250" alt="" />   
+<img src="./doc/color/labbt.png" width="300" alt="" /><img src="./doc/color/lablt.png" width="300" alt="" />   
 
-<img src="./doc/color/labcomb.png" width="500" alt="" />  
+<img src="./doc/color/labcomb.png" width="650" alt="" />  
 
 This is the result of the gradient mask:
 
-<img src="./doc/color/gradientmask.png" width="500" alt="" /> 
+<img src="./doc/color/gradientmask.png" width="650" alt="" /> 
 
 To obtained the gradient mask I used the following code:
 ``` python
@@ -104,7 +104,7 @@ To obtained the gradient mask I used the following code:
 
 Finally we combine the color mask with the gradient mask:
 
-<img src="./doc/color/final.png" width="500" alt="" /> 
+<img src="./doc/color/final.png" width="650" alt="" /> 
 
 
   
@@ -127,9 +127,9 @@ I verified that my perspective transform was working as expected by drawing the 
 ![alt text][image4]
 
 Here some examples of the transformation applied to test images: 
-<img src="./doc/perspect1.png" width="500" alt="" /> 
-<img src="./doc/perspect2.png" width="500" alt="" /> 
-<img src="./doc/perspect3.png" width="500" alt="" /> 
+<img src="./doc/perspect1.png" width="650" alt="" />   
+<img src="./doc/perspect2.png" width="650" alt="" />   
+<img src="./doc/perspect3.png" width="650" alt="" />   
 
 The perspective transformation allow us to create a "birds-eye view" that will be useful to identify the lanes.
 
@@ -138,7 +138,7 @@ The perspective transformation allow us to create a "birds-eye view" that will b
 
 After correcting distortion, applying thresholding, and a perspective transform to a road image, we have a binary image where the lane lines stand out clearly. However, we still need to decide explicitly which pixels are part of the lines and which belong to the left line and which belong to the right line.
 
-<img src="./pimage/0_1.png" width="500" alt="" /> 
+<img src="./doc/pimage/0_1.png" width="650" alt="" /> 
 
 I first take a histogram along all the columns in the lower half of the image like this:
 
@@ -150,11 +150,11 @@ plt.plot(histogram)
 
 This is the result:
 
-<img src="./pimage/0_hist.png" width="500" alt="" /> 
+<img src="./doc/pimage/0_hist.png" width="650" alt="" />   
 
 The peaks in the histogram represent the position of each lines in the bottom part of the image.  I can use that as a starting point for where to search for the lines. From that point, I can use a sliding window, placed around the line centers, to find and follow the lines up to the top of the frame. Now we can fit a second order polynomial to each group of points, get the curve equations and plot them:
 
-<img src="./pimage/0_2.png" width="500" alt="" /> 
+<img src="./doc/pimage/0_2.png" width="650" alt="" />   
 
 
 
@@ -169,21 +169,21 @@ Here the idea is to take the measurements of where the lane lines are and estima
 
 Here is an example of my result on a test image:
 
-<img src="./pimage/0_3.png" width="500" alt="" /> 
+<img src="./doc/pimage/0_3.png" width="650" alt="" /> 
 
 Now others examples:
 ---
-<img src="./pimage/2_1.png" width="500" alt="" />    
-<img src="./pimage/2_2.png" width="500" alt="" />    
-<img src="./pimage/2_3.png" width="500" alt="" />   
+<img src="./doc/pimage/2_1.png" width="650" alt="" />    
+<img src="./doc/pimage/2_2.png" width="650" alt="" />    
+<img src="./doc/pimage/2_3.png" width="650" alt="" />   
 ---
-<img src="./pimage/3_1.png" width="500" alt="" />    
-<img src="./pimage/3_2.png" width="500" alt="" />    
-<img src="./pimage/3_3.png" width="500" alt="" /> 
+<img src="./doc/pimage/3_1.png" width="650" alt="" />    
+<img src="./doc/pimage/3_2.png" width="650" alt="" />    
+<img src="./doc/pimage/3_3.png" width="650" alt="" />     
 ---
-<img src="./pimage/4_1.png" width="500" alt="" />    
-<img src="./pimage/4_2.png" width="500" alt="" />    
-<img src="./pimage/4_3.png" width="500" alt="" /> 
+<img src="./doc/pimage/4_1.png" width="650" alt="" />    
+<img src="./doc/pimage/4_2.png" width="650" alt="" />    
+<img src="./doc/pimage/4_3.png" width="650" alt="" />    
 
 ---
 
