@@ -190,6 +190,9 @@ Now others examples:
 
 ### Pipeline (video)
 
+![](./doc/result.gif)   
+Click [here](https://www.youtube.com/watch?v=Yxo6a1anv2c) for the video.
+
 The pipeline for the video is similar to that one described above for the image. Since we are working with a video stream, we can take advantage of the previous detection. I defined a `Line()` class to keep track of all the interesting parameters measured from frame to frame.
 
 At the first iteration, we don't know at all where the lines are, so we used the sliding window technique described before. In the next frame of video we don't need to do a blind search again, but instead we can just search in a margin around the previous line position (the green shaded area in the video). If the tracking fails (i.e. the line is not found), then we go back to the sliding windows search to look again for the lines. This is working independently for the right and left lines.
