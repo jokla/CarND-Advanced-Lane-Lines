@@ -4,6 +4,8 @@
 
 In this project, the goal is to write a software pipeline to identify the lane boundaries in a video from a front-facing camera on a car.
 
+![](./doc/result.gif) 
+
 The steps of this project are the following:
 
 * Compute the camera calibration matrix and distortion coefficients given a set of chessboard images.
