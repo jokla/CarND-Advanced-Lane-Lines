@@ -67,9 +67,10 @@ Now we convert the image to the [LUV color space](https://en.wikipedia.org/wiki/
 
 and we apply the threshold to get the white pixels:    
 
-<img src="./doc/color/luv_threshold.png" width="650" alt="" />   
+<img src="./doc/color/luv_threshold.png" width="650" alt="" />     
 
-Now let's analyze the B and L channels of the [LAB color space](https://en.wikipedia.org/wiki/Lab_color_space):
+Now let's analyze the B and L channels of the [LAB color space](https://en.wikipedia.org/wiki/Lab_color_space):   
+
 <img src="./doc/color/labb.png" width="300" alt="" /><img src="./doc/color/labl.png" width="300" alt="" />   
 
 we apply the thresholds on both channels and we get:
